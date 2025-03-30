@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "110026818267",
+    "project_id": "employapp-bd61e",
+    "storage_bucket": "employapp-bd61e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110026818267:android:2ca1c4aed389562d2882fe",
+        "android_client_info": {
+          "package_name": "com.example.employ_form"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhCvApUOL_bfCSX3HICCCBLAlaNxnSR28"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
