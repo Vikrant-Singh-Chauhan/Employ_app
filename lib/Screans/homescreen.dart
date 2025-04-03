@@ -27,6 +27,8 @@ class _HomescreenState extends State<Homescreen> {
     load_employ_data();
   }
 
+
+
   void load_employ_data() {
     employ_stream = DatabaseMethods().getEmployDetails();
     setState(() {});
@@ -136,7 +138,7 @@ class _HomescreenState extends State<Homescreen> {
                                         agecontroller.text =
                                             ds["Age"].toString();
                                         locationcontroller.text =
-                                        ds["Location"];
+                                            ds["Location"];
                                         editEmployDetails(ds.id);
                                       },
                                       child: const Icon(
@@ -180,7 +182,7 @@ class _HomescreenState extends State<Homescreen> {
                                   ),
                                 ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -205,65 +207,70 @@ class _HomescreenState extends State<Homescreen> {
   }
 
   Future editEmployDetails(String id) => showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              GestureDetector(
-                onTap: () {
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Icon(Icons.cancel),
+                  ),
+                  const SizedBox(width: 50),
+                  const Text(
+                    "Edit",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.brown,
+                    ),
+                  ),
+                  const Text(
+                    "Details",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              const Text("Name",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              TextField(controller: namecontroller),
+              const SizedBox(height: 10),
+              const Text("Age",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              TextField(
+                  controller: agecontroller,
+                  keyboardType: TextInputType.number),
+              const SizedBox(height: 10),
+              const Text("Location",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              TextField(controller: locationcontroller),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () async {
+                  Map<String, dynamic> updateInfo = {
+                    "Name": namecontroller.text,
+                    "Age": int.tryParse(agecontroller.text) ?? 0,
+                    "Location": locationcontroller.text,
+                  };
+
+                  await DatabaseMethods().updateEmployDetails(id, updateInfo);
                   Navigator.pop(context);
+                  Fluttertoast.showToast(msg: "Employee updated successfully");
                 },
-                child: const Icon(Icons.cancel),
-              ),
-              const SizedBox(width: 50),
-              const Text(
-                "Edit",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.brown,
-                ),
-              ),
-              const Text(
-                "Details",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                ),
+                child: const Text('Update'),
               ),
             ],
           ),
-          const SizedBox(height: 10),
-          const Text("Name", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          TextField(controller: namecontroller),
-          const SizedBox(height: 10),
-          const Text("Age", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          TextField(controller: agecontroller, keyboardType: TextInputType.number),
-          const SizedBox(height: 10),
-          const Text("Location", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          TextField(controller: locationcontroller),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () async {
-              Map<String, dynamic> updateInfo = {
-                "Name": namecontroller.text,
-                "Age": int.tryParse(agecontroller.text) ?? 0,
-                "Location": locationcontroller.text,
-              };
-
-              await DatabaseMethods().updateEmployDetails(id, updateInfo);
-              Navigator.pop(context);
-              Fluttertoast.showToast(msg: "Employee updated successfully");
-            },
-            child: const Text('Update'),
-          ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 }

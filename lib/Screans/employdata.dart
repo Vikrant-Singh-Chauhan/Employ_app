@@ -1,4 +1,6 @@
 import 'package:employ_form/firebase%20file/database.dart';
+import 'package:employ_form/login_and_sign_up/loginscreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:random_string/random_string.dart';
@@ -15,6 +17,9 @@ class _EmploydataState extends State<Employdata> {
   TextEditingController namecontroller = TextEditingController();
   TextEditingController agecontroller = TextEditingController();
   TextEditingController locationcontroller = TextEditingController();
+  singOut(){
+    return FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +153,21 @@ class _EmploydataState extends State<Employdata> {
                         "Add",
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
-                      )))
+                      ))),
+              Center(child: ElevatedButton(onPressed: (){
+
+                  Fluttertoast.showToast(
+                      msg: "Now you are Sign Out",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.yellowAccent,
+                      textColor: Colors.white,
+                      fontSize: 16.0
+                  );
+                  singOut();
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => loginscreen(),));
+                  }, child: Text("SignOut")))
             ],
           ),
         ),

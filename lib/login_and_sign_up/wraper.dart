@@ -13,11 +13,7 @@ class Wraper extends StatefulWidget {
 class _WraperState extends State<Wraper> {
   @override
   Widget build(BuildContext context) {
-    final firebaseAuth = FirebaseAuth.instance;
-    return
-
-
-     Scaffold(
+    return Scaffold(
       body: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
